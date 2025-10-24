@@ -9,7 +9,9 @@ const app = express();
 
 // using middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: "https://chatfrontend-six-sigma.vercel.app/" // <-- Put your Vercel URL here
+}));
 
 //importing routes
 import userRoutes from "./routes/userRoutes.js";
