@@ -10,7 +10,10 @@ const app = express();
 // using middleware
 app.use(express.json());
 app.use(cors({
-  origin: "https://chatfrontend-six-sigma.vercel.app" // <-- Put your Vercel URL here
+  origin: [
+    "https://chatfrontend-six-sigma.vercel.app", // Your deployed frontend
+    "http://localhost:5174" // Your local frontend
+  ]
 }));
 
 //importing routes
