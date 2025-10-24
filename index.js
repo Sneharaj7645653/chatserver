@@ -11,8 +11,9 @@ const app = express();
 app.use(express.json());
 app.use(cors({
   origin: [
-    "https://chatfrontend-six-sigma.vercel.app", // Your deployed frontend
-    "http://localhost:5174" // Your local frontend
+    "https://chatfrontend-six-sigma.vercel.app", 
+    "http://localhost:5174", 
+    "http://localhost:5173"  
   ]
 }));
 
