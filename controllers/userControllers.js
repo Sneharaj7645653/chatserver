@@ -11,10 +11,10 @@ import jwt from "jsonwebtoken";
  * Start the login flow by creating (or finding) a user and sending an OTP.
  * - Request body: { email }
  * - Behavior:
- *   1. Finds or creates a `User` document for the supplied email.
- *   2. Generates a 6-digit OTP and signs a short-lived verification token
- *      containing the user and OTP using `process.env.Activation_sec`.
- *   3. Sends the OTP to the user's email via `sendMail` middleware.
+ * 1. Finds or creates a `User` document for the supplied email.
+ * 2. Generates a 6-digit OTP and signs a short-lived verification token
+ * containing the user and OTP using `process.env.Activation_sec`.
+ * 3. Sends the OTP to the user's email via `sendMail` middleware.
  * - Response: { message, verifyToken }
  */
 export const loginUser = async (req, res) => {
@@ -47,6 +47,9 @@ export const loginUser = async (req, res) => {
       verifyToken,
     });
   } catch (error) {
+    // Log the actual error to the Render console for debugging
+    console.log("ERROR IN LOGIN USER:", error);
+
     // Generic error response (500) with the error message
     res.status(500).json({
       message: error.message,
@@ -58,9 +61,9 @@ export const loginUser = async (req, res) => {
  * Verify the OTP and issue a long-lived JWT for the user.
  * - Request body: { otp, verifyToken }
  * - Behavior:
- *   1. Verifies `verifyToken` using `Activation_sec` to recover the OTP and user.
- *   2. Compares the provided `otp` to the one inside the token.
- *   3. Signs and returns an authentication token (JWT) using `Jwt_sec`.
+ * 1. Verifies `verifyToken` using `Activation_sec` to recover the OTP and user.
+ * 2. Compares the provided `otp` to the one inside the token.
+ * 3. Signs and returns an authentication token (JWT) using `Jwt_sec`.
  * - Response: { message, user, token }
  */
 export const verifyUser = async (req, res) => {
@@ -92,6 +95,8 @@ export const verifyUser = async (req, res) => {
       token,
     });
   } catch (error) {
+    // Also log errors during verification
+    console.log("ERROR IN VERIFY USER:", error);
     res.status(500).json({
       message: error.message,
     });
@@ -109,6 +114,7 @@ export const myProfile = async (req, res) => {
 
     res.json(user);
   } catch (error) {
+    console.log("ERROR IN MY PROFILE:", error);
     res.status(500).json({
       message: error.message,
     });
