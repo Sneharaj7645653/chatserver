@@ -12,7 +12,6 @@ app.use(express.json());
 app.use(cors({
   origin: [
     "https://chatfrontend-six-sigma.vercel.app", 
-    "http://localhost:5174", 
     "http://localhost:5173"  
   ]
 }));
